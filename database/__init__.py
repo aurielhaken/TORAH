@@ -1,0 +1,3 @@
+"""
+Configuration base de données
+"""

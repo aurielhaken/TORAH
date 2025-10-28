@@ -1,0 +1,82 @@
+# Torah AI - Fichiers à ignorer
+
+# Environnements Python
+venv/
+env/
+ENV/
+.venv
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Configuration sensible
+.env
+.env.local
+.env.production
+*.key
+*.pem
+secrets/
+
+# Base de données
+*.db
+*.sqlite
+*.sqlite3
+pgdata/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+*.log
+logs/
+
+# Cache
+.cache/
+*.cache
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Modèles ML (trop gros pour git)
+models/embeddings/
+*.pkl
+*.pt
+*.pth
+*.onnx
+
+# Documentation générée
+site/
+docs/_build/
+
+# Temporaires
+tmp/
+temp/
+*.tmp
+
+# Tests
+.coverage
+htmlcov/
+.tox/
+
+# Distribution
+dist/
+build/
+*.egg-info/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# OS
+Thumbs.db
+.Spotlight-V100
+.Trashes
