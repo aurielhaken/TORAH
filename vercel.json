@@ -1,0 +1,24 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/main.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "15mb",
+        "runtime": "python3.11"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "api/main.py"
+    }
+  ],
+  "env": {
+    "DATABASE_URL": "sqlite:///./torah_ai.db",
+    "PYTHON_VERSION": "3.11",
+    "DEBUG": "false"
+  }
+}
