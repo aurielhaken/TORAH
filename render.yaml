@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: torah-ai-rav-virtuel
+    env: python
+    region: frankfurt  # Serveur en Europe
+    plan: free
+    buildCommand: |
+      pip install --upgrade pip
+      pip install -r requirements-minimal.txt
+      python database/init_sqlite.py
+    startCommand: uvicorn api.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        value: sqlite:///./torah_ai.db
+      - key: PYTHON_VERSION
+        value: 3.11.14
+      - key: API_HOST
+        value: 0.0.0.0
+      - key: DEBUG
+        value: false
+      - key: LOG_LEVEL
+        value: INFO

@@ -1,0 +1,16 @@
+# Fichiers à ignorer lors du déploiement
+*.md
+!README.md
+.git/
+.vscode/
+.idea/
+*.pyc
+__pycache__/
+venv/
+env/
+*.db
+tests/
+docs/
+.pytest_cache/
+.coverage
+htmlcov/
