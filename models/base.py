@@ -7,7 +7,15 @@ from typing import Optional
 from sqlalchemy import Column, Integer, String, Text, DateTime, Float, Boolean, ForeignKey, JSON
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-from pgvector.sqlalchemy import Vector
+
+# Support optionnel pour pgvector (PostgreSQL)
+try:
+    from pgvector.sqlalchemy import Vector
+    PGVECTOR_AVAILABLE = True
+except ImportError:
+    # Fallback pour SQLite
+    PGVECTOR_AVAILABLE = False
+    Vector = None
 
 Base = declarative_base()
 
@@ -170,7 +178,8 @@ class Embedding(Base, TimeStampMixin):
     id = Column(Integer, primary_key=True)
     passage_id = Column(Integer, ForeignKey('passages.id'), nullable=True)
     commentaire_id = Column(Integer, ForeignKey('commentaires.id'), nullable=True)
-    embedding = Column(Vector(768))  # Dimension pour sentence-transformers
+    # Support pgvector pour PostgreSQL, JSON pour SQLite
+    embedding = Column(Vector(768) if PGVECTOR_AVAILABLE else JSON)
     modele_utilise = Column(String(100))
     langue = Column(String(10))
 
