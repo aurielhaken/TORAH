@@ -76,6 +76,10 @@ build/
 .ipynb_checkpoints/
 *.ipynb
 
+# Node.js
+node_modules/
+package-lock.json
+
 # OS
 Thumbs.db
 .Spotlight-V100
