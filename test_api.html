@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torah AI - Test de l'API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 { color: #2c3e50; }
+        .endpoint {
+            margin: 20px 0;
+            padding: 15px;
+            background: #ecf0f1;
+            border-radius: 5px;
+        }
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #2980b9; }
+        .result {
+            margin-top: 10px;
+            padding: 10px;
+            background: #2c3e50;
+            color: #ecf0f1;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 3px;
+            margin-left: 10px;
+        }
+        .status.ok { background: #27ae60; color: white; }
+        .status.error { background: #e74c3c; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🕎 Torah AI - Rav Virtuel</h1>
+        <p>Interface de test de l'API</p>
+
+        <div class="endpoint">
+            <h3>Health Check <span id="health-status" class="status"></span></h3>
+            <button onclick="testHealth()">Tester /health</button>
+            <div id="health-result" class="result" style="display:none;"></div>
+        </div>
+
+        <div class="endpoint">
+            <h3>Page d'accueil</h3>
+            <button onclick="testRoot()">Tester /</button>
+            <div id="root-result" class="result" style="display:none;"></div>
+        </div>
+
+        <div class="endpoint">
+            <h3>Poser une question</h3>
+            <input type="text" id="question" placeholder="Votre question..." style="width: 100%; padding: 8px; margin: 5px 0;">
+            <button onclick="testQuestion()">Envoyer la question</button>
+            <div id="question-result" class="result" style="display:none;"></div>
+        </div>
+
+        <div class="endpoint">
+            <h3>Catégories disponibles</h3>
+            <button onclick="testCategories()">Tester /api/v1/categories</button>
+            <div id="categories-result" class="result" style="display:none;"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:8000';
+
+        async function testHealth() {
+            try {
+                const response = await fetch(`${API_URL}/health`);
+                const data = await response.json();
+                document.getElementById('health-result').style.display = 'block';
+                document.getElementById('health-result').textContent = JSON.stringify(data, null, 2);
+                document.getElementById('health-status').textContent = '✓ OK';
+                document.getElementById('health-status').className = 'status ok';
+            } catch (error) {
+                document.getElementById('health-result').style.display = 'block';
+                document.getElementById('health-result').textContent = 'Erreur: ' + error.message;
+                document.getElementById('health-status').textContent = '✗ Erreur';
+                document.getElementById('health-status').className = 'status error';
+            }
+        }
+
+        async function testRoot() {
+            try {
+                const response = await fetch(`${API_URL}/`);
+                const data = await response.json();
+                document.getElementById('root-result').style.display = 'block';
+                document.getElementById('root-result').textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('root-result').style.display = 'block';
+                document.getElementById('root-result').textContent = 'Erreur: ' + error.message;
+            }
+        }
+
+        async function testQuestion() {
+            const question = document.getElementById('question').value || "Quelle est la signification du Shabbat?";
+            try {
+                const response = await fetch(`${API_URL}/api/v1/question`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        question: question,
+                        langue: "fr",
+                        niveau: "intermediaire"
+                    })
+                });
+                const data = await response.json();
+                document.getElementById('question-result').style.display = 'block';
+                document.getElementById('question-result').textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('question-result').style.display = 'block';
+                document.getElementById('question-result').textContent = 'Erreur: ' + error.message;
+            }
+        }
+
+        async function testCategories() {
+            try {
+                const response = await fetch(`${API_URL}/api/v1/categories`);
+                const data = await response.json();
+                document.getElementById('categories-result').style.display = 'block';
+                document.getElementById('categories-result').textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('categories-result').style.display = 'block';
+                document.getElementById('categories-result').textContent = 'Erreur: ' + error.message;
+            }
+        }
+
+        // Test automatique au chargement
+        window.onload = () => {
+            testHealth();
+        };
+    </script>
+</body>
+</html>
