@@ -12,6 +12,7 @@ from enum import Enum
 import logging
 
 from ai.rav_virtuel import RavVirtuel, LangueSupported, NiveauReponse, ReponseRav
+from ai.codes_torah import AnalyseurCodesTorah, MethodeCode
 
 # Configuration du logging
 logging.basicConfig(level=logging.INFO)
@@ -124,7 +125,16 @@ async def root():
             "recherche": "/api/v1/recherche",
             "enseignement": "/api/v1/enseignement-quotidien",
             "parasha": "/api/v1/parasha",
-            "glossaire": "/api/v1/glossaire"
+            "glossaire": "/api/v1/glossaire",
+            "codes_torah": {
+                "guematrie": "/api/v1/codes/guematrie",
+                "els": "/api/v1/codes/els",
+                "notarikon": "/api/v1/codes/notarikon",
+                "atbash": "/api/v1/codes/atbash",
+                "temourah": "/api/v1/codes/temourah",
+                "analyser_tout": "/api/v1/codes/analyser-tout",
+                "exemples": "/api/v1/codes/exemples"
+            }
         },
         "documentation": "/docs"
     }
@@ -378,6 +388,262 @@ async def obtenir_statistiques():
     except Exception as e:
         logger.error(f"Erreur stats: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Erreur: {str(e)}")
+
+
+# ========== CODES CACHÉS DE LA TORAH ==========
+
+@app.post("/api/v1/codes/guematrie", tags=["Codes Torah"])
+async def calculer_guematrie_endpoint(
+    texte_hebreu: str = Field(..., description="Texte hébreu à analyser"),
+    methode: str = Field("standard", description="Méthode: standard, katan, sidouri, atbash")
+):
+    """
+    Calcule la valeur guématrique d'un texte hébreu
+
+    La guématrie (גימטריה) assigne une valeur numérique à chaque lettre hébraïque.
+    Révèle des connexions cachées entre mots de même valeur.
+
+    Méthodes:
+    - **standard**: Valeurs classiques (א=1, ב=2... ת=400)
+    - **katan**: Réduction à un chiffre (1-9)
+    - **sidouri**: Ordre alphabétique simple (1-22)
+    - **atbash**: Après substitution At-Bash
+
+    Exemples célèbres:
+    - אהבה (Ahava - Amour) = 13
+    - אחד (Ehad - Un) = 13
+    - → L'amour et l'unité sont identiques !
+    """
+    try:
+        analyseur = AnalyseurCodesTorah()
+        resultat = analyseur.calculer_guematrie(texte_hebreu, methode)
+
+        return {
+            "texte": resultat.texte,
+            "valeur": resultat.valeur,
+            "methode": resultat.methode,
+            "correspondances": resultat.correspondances,
+            "explication": f"La valeur guématrique de '{texte_hebreu}' est {resultat.valeur}"
+        }
+    except Exception as e:
+        logger.error(f"Erreur guématrie: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Erreur: {str(e)}")
+
+
+@app.post("/api/v1/codes/els", tags=["Codes Torah"])
+async def rechercher_els_endpoint(
+    texte_complet: str = Field(..., description="Texte complet (Torah, passage)"),
+    mot_recherche: str = Field(..., description="Mot à rechercher en ELS"),
+    intervalle_min: int = Field(1, ge=1, description="Intervalle minimum"),
+    intervalle_max: int = Field(50, le=100, description="Intervalle maximum")
+):
+    """
+    Recherche des codes ELS (Equidistant Letter Sequences)
+
+    Cherche un mot dont les lettres apparaissent à intervalles réguliers dans le texte.
+    Méthode rendue célèbre par le livre "The Bible Code".
+
+    Exemple:
+    Si on cherche "Torah" (תורה) avec intervalle 7, on cherche:
+    - ת à position N
+    - ו à position N+7
+    - ר à position N+14
+    - ה à position N+21
+
+    Plus l'intervalle est court, plus la découverte est significative.
+    """
+    try:
+        analyseur = AnalyseurCodesTorah()
+        resultats = analyseur.rechercher_els(
+            texte_complet,
+            mot_recherche,
+            intervalle_min,
+            intervalle_max
+        )
+
+        return {
+            "mot_recherche": mot_recherche,
+            "nombre_resultats": len(resultats),
+            "resultats": [
+                {
+                    "mot_trouve": r.mot_trouve,
+                    "position_debut": r.position_debut,
+                    "intervalle": r.intervalle,
+                    "contexte": r.contexte,
+                    "pertinence": r.pertinence
+                }
+                for r in resultats[:10]  # Top 10
+            ]
+        }
+    except Exception as e:
+        logger.error(f"Erreur ELS: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Erreur: {str(e)}")
+
+
+@app.post("/api/v1/codes/notarikon", tags=["Codes Torah"])
+async def analyser_notarikon_endpoint(
+    texte: str = Field(..., description="Texte hébreu"),
+    mode: str = Field("acronyme", description="Mode: acronyme ou expansion")
+):
+    """
+    Analyse Notarikon (נוטריקון) - Acronymes et expansions
+
+    Deux modes:
+
+    **Acronyme**: Prend la première lettre de chaque mot
+    - Exemple: "שמע ישראל" → "שי"
+
+    **Expansion**: Chaque lettre devient un mot
+    - Exemple: אמן = אל מלך נאמן (El Melekh Neeman)
+    - רמב״ם = רבי משה בן מימון (Maimonide)
+
+    Utilisé pour créer des acronymes sacrés ou révéler des sens cachés.
+    """
+    try:
+        analyseur = AnalyseurCodesTorah()
+        resultat = analyseur.analyser_notarikon(texte, mode)
+
+        return {
+            "texte_source": resultat.texte_source,
+            "acronyme": resultat.acronyme,
+            "expansion": resultat.expansion,
+            "type": resultat.type,
+            "explication": f"Notarikon ({mode}) de '{texte}'"
+        }
+    except Exception as e:
+        logger.error(f"Erreur notarikon: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Erreur: {str(e)}")
+
+
+@app.post("/api/v1/codes/atbash", tags=["Codes Torah"])
+async def appliquer_atbash_endpoint(
+    texte: str = Field(..., description="Texte hébreu à transformer")
+):
+    """
+    Applique la substitution At-Bash (אתב״ש)
+
+    Méthode de chiffrement hébraïque:
+    - Première lettre ↔ Dernière lettre
+    - Deuxième ↔ Avant-dernière
+    - etc.
+
+    Table:
+    - א ↔ ת
+    - ב ↔ ש
+    - ג ↔ ר
+    - ד ↔ ק
+    - ...
+
+    Exemple célèbre:
+    - בבל (Babel) en At-Bash = ששך (Sheshakh)
+    - Mentionné dans Jérémie 25:26 !
+
+    Révèle des connexions mystiques entre concepts opposés.
+    """
+    try:
+        analyseur = AnalyseurCodesTorah()
+        resultat = analyseur.appliquer_atbash(texte)
+
+        return {
+            "texte_original": texte,
+            "texte_atbash": resultat,
+            "explication": f"At-Bash de '{texte}' = '{resultat}'",
+            "note": "At-Bash est symétrique: encoder = décoder"
+        }
+    except Exception as e:
+        logger.error(f"Erreur atbash: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Erreur: {str(e)}")
+
+
+@app.post("/api/v1/codes/temourah", tags=["Codes Torah"])
+async def analyser_temourah_endpoint(
+    texte: str = Field(..., description="Texte hébreu"),
+    type_permutation: str = Field("cyclique", description="Type: simple, cyclique, atbash")
+):
+    """
+    Analyse Témourah (תמורה) - Permutations de lettres
+
+    Réarrange les lettres pour révéler de nouvelles significations.
+
+    Types:
+    - **simple**: Permutations directes des lettres
+    - **cyclique**: Rotations (ABC → BCA → CAB)
+    - **atbash**: Substitution inversée
+
+    Utilisé en Kabbale pour découvrir des noms divins cachés et des enseignements secrets.
+    """
+    try:
+        analyseur = AnalyseurCodesTorah()
+        variantes = analyseur.analyser_temourah(texte, type_permutation)
+
+        return {
+            "texte_original": texte,
+            "type_permutation": type_permutation,
+            "variantes": variantes[:10],  # Limiter à 10
+            "nombre_total": len(variantes),
+            "explication": f"Témourah ({type_permutation}) de '{texte}'"
+        }
+    except Exception as e:
+        logger.error(f"Erreur témourah: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Erreur: {str(e)}")
+
+
+@app.post("/api/v1/codes/analyser-tout", tags=["Codes Torah"])
+async def analyser_tout_endpoint(
+    texte_hebreu: str = Field(..., description="Texte hébreu à analyser complètement")
+):
+    """
+    Analyse complète avec TOUTES les méthodes
+
+    Applique simultanément:
+    - Guématrie (standard, katan, sidouri)
+    - Notarikon (acronymes et expansions)
+    - At-Bash (substitution)
+    - Témourah (permutations cycliques)
+
+    Parfait pour une exploration approfondie d'un mot ou passage.
+
+    Exemple: Analysez "שלום" (Shalom - Paix) pour découvrir toutes ses dimensions cachées !
+    """
+    try:
+        analyseur = AnalyseurCodesTorah()
+        resultats = analyseur.analyser_tout(texte_hebreu)
+
+        return {
+            "texte_analyse": texte_hebreu,
+            "analyses": resultats,
+            "note": "Analyse complète des codes cachés dans ce texte"
+        }
+    except Exception as e:
+        logger.error(f"Erreur analyse complète: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Erreur: {str(e)}")
+
+
+@app.get("/api/v1/codes/exemples", tags=["Codes Torah"])
+async def obtenir_exemples_codes():
+    """
+    Exemples célèbres de codes Torah
+
+    Retourne des découvertes connues et leurs significations:
+    - אהבה (Amour) = אחד (Un) = 13
+    - משיח (Messie) = נחש (Serpent) = 358
+    - יהוה (Hashem) = 26
+    - Etc.
+
+    Ces correspondances ne sont pas des coïncidences mais révèlent
+    des connexions spirituelles profondes dans le texte sacré.
+    """
+    from ai.codes_torah import DECOUVERTES_CELEBRES
+
+    return {
+        "decouvertes": DECOUVERTES_CELEBRES,
+        "note": "Ces découvertes sont enseignées dans la tradition kabbalistique",
+        "references": [
+            "Sefer Yetzirah (Livre de la Formation)",
+            "Bahir (Livre de la Clarté)",
+            "Zohar (Livre de la Splendeur)"
+        ]
+    }
 
 
 # Gestion des erreurs

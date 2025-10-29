@@ -10,6 +10,7 @@ Une intelligence artificielle dédiée à l'enseignement de la Torah, accessible
 - **IA conversationnelle**: Posez vos questions en langage naturel
 - **Multilingue**: Support hébreu, français, anglais, et plus
 - **Recherche sémantique**: Trouve les passages pertinents basés sur le sens, pas seulement les mots-clés
+- **Codes cachés de la Torah**: Guématrie, ELS, Notarikon, At-Bash, Témourah
 - **Accessible mondialement**: API REST disponible partout dans le monde
 - **Valeurs juives**: Réponses imprégnées d'amour, sagesse et éthique juive
 
@@ -50,6 +51,18 @@ rav = RavVirtuel()
 reponse = rav.poser_question("Quelle est la signification du Shabbat?")
 print(reponse)
 ```
+
+## Codes Cachés de la Torah
+
+Découvrez les dimensions mystiques du texte sacré avec notre système d'analyse des codes :
+
+- **Guématrie** : Valeurs numériques révélant des connexions cachées (ex: אהבה = אחד = 13)
+- **ELS** : Séquences équidistantes de lettres
+- **Notarikon** : Acronymes et expansions sacrés
+- **At-Bash** : Substitution hébraïque (ex: בבל → ששך)
+- **Témourah** : Permutations révélant de nouveaux sens
+
+Voir [CODES_TORAH.md](CODES_TORAH.md) pour la documentation complète et des exemples.
 
 ## Contribution
 
