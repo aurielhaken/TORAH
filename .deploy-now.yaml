@@ -1,0 +1,37 @@
+# Configuration IONOS Deploy Now pour Torah AI
+# https://docs.ionos.space/docs/
+
+name: torah-ai
+
+# Détection automatique de Python
+runtime: python
+
+# Version Python
+python-version: "3.11"
+
+# Fichier de dépendances
+requirements: requirements-minimal.txt
+
+# Commande de build (optionnel)
+# build:
+#   command: echo "No build required"
+
+# Commande de démarrage (depuis Procfile)
+start:
+  command: uvicorn api.main:app --host 0.0.0.0 --port $PORT --workers 2
+
+# Variables d'environnement par défaut
+env:
+  DEBUG: "False"
+  LOG_LEVEL: "info"
+
+# Health check
+health-check:
+  path: /health
+  interval: 30
+  timeout: 5
+  retries: 3
+
+# Configuration du domaine (optionnel)
+# domain:
+#   custom: torah-ai.com
