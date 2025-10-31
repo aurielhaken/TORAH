@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "name": "guematrai",
   "builds": [
     {
       "src": "api/main.py",
@@ -17,8 +18,31 @@
     }
   ],
   "env": {
-    "DATABASE_URL": "sqlite:///./torah_ai.db",
     "PYTHON_VERSION": "3.11",
     "DEBUG": "false"
-  }
+  },
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, POST, PUT, DELETE, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "Content-Type, Authorization"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        }
+      ]
+    }
+  ],
+  "regions": ["iad1"]
 }

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="API d'analyse des codes cachés de la Torah - Guématrie, ELS, Notarikon, At-Bash, Témourah">
+    <meta name="keywords" content="Torah, Guématrie, Kabbalah, codes Torah, API hébraïque">
+    <title>🔯 Guematrai - Codes Cachés de la Torah</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.3em;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .hebrew {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 20px 0;
+            direction: rtl;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .card h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #ffd700;
+        }
+
+        .card p {
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+
+        .discovery {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 30px 0;
+            border-left: 4px solid #ffd700;
+        }
+
+        .discovery h3 {
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+
+        .discovery-item {
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+
+        .cta {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            margin: 10px;
+            background: #ffd700;
+            color: #1e3c72;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .btn:hover {
+            background: #ffed4e;
+            transform: scale(1.05);
+            box-shadow: 0 7px 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .endpoints {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+
+        .endpoint {
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .method {
+            display: inline-block;
+            padding: 5px 15px;
+            background: #4CAF50;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .method.post {
+            background: #2196F3;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+        }
+
+        .quote {
+            font-style: italic;
+            font-size: 1.2em;
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        code {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔯 Guematrai</h1>
+            <div class="hebrew">גימטריא</div>
+            <p class="subtitle">API d'Analyse des Codes Cachés de la Torah</p>
+            <p>Explorez les dimensions mystiques du texte sacré</p>
+        </header>
+
+        <div class="cta">
+            <a href="/docs" class="btn">📖 Documentation Interactive</a>
+            <a href="/api/v1/codes/exemples" class="btn">✨ Exemples Célèbres</a>
+        </div>
+
+        <div class="discovery">
+            <h3>🌟 Découvertes Célèbres</h3>
+            <div class="discovery-item">
+                <strong>אהבה (Ahava - Amour) = 13</strong><br>
+                <strong>אחד (Ehad - Un) = 13</strong><br>
+                → L'amour et l'unité sont identiques !
+            </div>
+            <div class="discovery-item">
+                <strong>יהוה (Hashem - Le Nom) = 26</strong><br>
+                26 = 2 × 13 (Ahava × 2)<br>
+                → Dieu est amour multiplié
+            </div>
+            <div class="discovery-item">
+                <strong>משיח (Mashiah - Messie) = 358</strong><br>
+                <strong>נחש (Nahash - Serpent) = 358</strong><br>
+                → Le Messie transformera le mal en bien
+            </div>
+        </div>
+
+        <h2 style="text-align: center; margin: 40px 0; font-size: 2em;">5 Méthodes Kabbalistiques</h2>
+
+        <div class="cards">
+            <div class="card">
+                <h3>📊 Guématrie</h3>
+                <p><strong>גימטריא</strong></p>
+                <p>Calcul des valeurs numériques de chaque lettre hébraïque. Révèle des connexions spirituelles entre mots de même valeur.</p>
+                <p><strong>Exemple :</strong> א=1, ב=2... ת=400</p>
+            </div>
+
+            <div class="card">
+                <h3>🔍 ELS</h3>
+                <p><strong>Equidistant Letter Sequences</strong></p>
+                <p>Recherche de mots dont les lettres apparaissent à intervalles réguliers. Méthode des "Bible Codes".</p>
+                <p><strong>Exemple :</strong> Chercher תורה avec intervalle 7</p>
+            </div>
+
+            <div class="card">
+                <h3>📝 Notarikon</h3>
+                <p><strong>נוטריקון</strong></p>
+                <p>Acronymes et expansions sacrés. Chaque lettre peut devenir un mot entier.</p>
+                <p><strong>Exemple :</strong> אמן = אל מלך נאמן</p>
+            </div>
+
+            <div class="card">
+                <h3>🔄 At-Bash</h3>
+                <p><strong>אתב״ש</strong></p>
+                <p>Substitution symétrique des lettres (א↔ת, ב↔ש). Chiffrement hébraïque ancien.</p>
+                <p><strong>Exemple :</strong> בבל → ששך (Jérémie 25:26)</p>
+            </div>
+
+            <div class="card">
+                <h3>🔀 Témourah</h3>
+                <p><strong>תמורה</strong></p>
+                <p>Permutations et rotations de lettres pour révéler de nouvelles significations.</p>
+                <p><strong>Exemple :</strong> אור → ראו (Lumière → Voyez)</p>
+            </div>
+        </div>
+
+        <div class="endpoints">
+            <h2 style="margin-bottom: 25px;">🔌 API Endpoints</h2>
+
+            <div class="endpoint">
+                <span class="method post">POST</span>
+                <code>/api/v1/codes/guematrie</code>
+                <p style="margin-top: 10px; opacity: 0.8;">Calcul guématrique avec 4 méthodes</p>
+            </div>
+
+            <div class="endpoint">
+                <span class="method post">POST</span>
+                <code>/api/v1/codes/els</code>
+                <p style="margin-top: 10px; opacity: 0.8;">Recherche de codes ELS</p>
+            </div>
+
+            <div class="endpoint">
+                <span class="method post">POST</span>
+                <code>/api/v1/codes/notarikon</code>
+                <p style="margin-top: 10px; opacity: 0.8;">Analyse notarikon (acronymes/expansions)</p>
+            </div>
+
+            <div class="endpoint">
+                <span class="method post">POST</span>
+                <code>/api/v1/codes/atbash</code>
+                <p style="margin-top: 10px; opacity: 0.8;">Substitution At-Bash</p>
+            </div>
+
+            <div class="endpoint">
+                <span class="method post">POST</span>
+                <code>/api/v1/codes/temourah</code>
+                <p style="margin-top: 10px; opacity: 0.8;">Permutations Témourah</p>
+            </div>
+
+            <div class="endpoint">
+                <span class="method post">POST</span>
+                <code>/api/v1/codes/analyser-tout</code>
+                <p style="margin-top: 10px; opacity: 0.8;">Analyse complète (toutes les méthodes)</p>
+            </div>
+
+            <div class="endpoint">
+                <span class="method">GET</span>
+                <code>/api/v1/codes/exemples</code>
+                <p style="margin-top: 10px; opacity: 0.8;">Découvertes célèbres</p>
+            </div>
+        </div>
+
+        <div class="quote">
+            "Tourne-la et retourne-la, car tout est en elle"<br>
+            <small>— Pirke Avot 5:22</small>
+        </div>
+
+        <div class="cta">
+            <a href="/docs" class="btn">🚀 Commencer Maintenant</a>
+            <a href="/health" class="btn">✅ Status de l'API</a>
+        </div>
+
+        <footer>
+            <h3>📚 Références Kabbalistiques</h3>
+            <p style="margin: 20px 0;">
+                Basé sur les enseignements de :<br>
+                <strong>Sefer Yetzirah</strong> (Livre de la Formation)<br>
+                <strong>Bahir</strong> (Livre de la Clarté)<br>
+                <strong>Zohar</strong> (Livre de la Splendeur)
+            </p>
+
+            <p style="margin-top: 30px; opacity: 0.8;">
+                🔯 Fait avec amour pour l'étude de la Torah<br>
+                <strong>B'hatzla'ha!</strong> 🙏
+            </p>
+
+            <p style="margin-top: 20px; font-size: 0.9em;">
+                <a href="https://github.com/aurielhaken/TORAH" style="color: #ffd700; text-decoration: none;">
+                    GitHub Repository
+                </a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -5,11 +5,13 @@ Accessible au monde entier pour l'enseignement de la Torah
 
 from fastapi import FastAPI, HTTPException, Depends, Query
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, HTMLResponse, FileResponse
 from pydantic import BaseModel, Field
 from typing import Optional, List
 from enum import Enum
 import logging
+import os
+from pathlib import Path
 
 from ai.rav_virtuel import RavVirtuel, LangueSupported, NiveauReponse, ReponseRav
 from ai.codes_torah import AnalyseurCodesTorah, MethodeCode
@@ -108,12 +110,21 @@ class EnseignementQuotidienResponse(BaseModel):
 
 # Endpoints
 
-@app.get("/", tags=["Général"])
+@app.get("/", response_class=HTMLResponse, tags=["Général"])
 async def root():
     """Page d'accueil de l'API"""
+    try:
+        # Chercher le fichier index.html
+        html_path = Path(__file__).parent / "index.html"
+        if html_path.exists():
+            return HTMLResponse(content=html_path.read_text(encoding='utf-8'))
+    except Exception as e:
+        logger.error(f"Erreur lecture index.html: {e}")
+
+    # Fallback en JSON si HTML non disponible
     return {
-        "message": "Bienvenue sur Torah AI - Rav Virtuel",
-        "description": "Une IA dédiée à l'enseignement de la Torah avec amour et sagesse",
+        "message": "Bienvenue sur Guematrai - API des Codes Torah",
+        "description": "Explorez les dimensions mystiques du texte sacré",
         "valeurs": [
             "Ahavat Israel - Amour du peuple juif",
             "Emet - Vérité",
