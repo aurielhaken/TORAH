@@ -1,0 +1,29 @@
+# Assets
+assets/videos/*.mp4
+assets/videos/*.webm
+assets/videos/*.mov
+assets/images/*.jpg
+assets/images/*.png
+assets/images/*.svg
+
+# Keep folder structure
+!assets/videos/.gitkeep
+!assets/images/.gitkeep
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Dependencies (if using npm/yarn later)
+node_modules/
+package-lock.json
+yarn.lock

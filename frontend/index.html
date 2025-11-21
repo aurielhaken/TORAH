@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DoctHair - Analyse Capillaire par IA & Microscope</title>
+    <meta name="description" content="Découvrez l'état réel de vos cheveux grâce à l'analyse microscopique et l'intelligence artificielle. Rapport personnalisé et plan d'action adapté.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-text">Doct<span class="logo-highlight">Hair</span></span>
+            </div>
+
+            <div class="nav-links" id="navLinks">
+                <a href="#fonctionnalites" class="nav-link">Fonctionnalités</a>
+                <a href="#apropos" class="nav-link">À propos</a>
+                <a href="#tarifs" class="nav-link promo-link">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                    </svg>
+                    Tarifs -70%
+                </a>
+
+                <div class="nav-divider"></div>
+
+                <button class="language-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                    Français
+                </button>
+
+                <a href="#connexion" class="btn-secondary">Connexion</a>
+                <a href="#commencer" class="btn-primary">Commencer</a>
+            </div>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-container">
+            <!-- Left Content -->
+            <div class="hero-content">
+                <div class="badge" data-aos="fade-up">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 11l3 3L22 4"></path>
+                        <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
+                    </svg>
+                    Analyse capillaire par microscope & IA
+                </div>
+
+                <h1 class="hero-title" data-aos="fade-up" data-aos-delay="100">
+                    Comprenez enfin l'état
+                    <span class="gradient-text">réel</span> de vos cheveux.
+                </h1>
+
+                <p class="hero-description" data-aos="fade-up" data-aos-delay="200">
+                    DoctHair analyse quelques-uns de vos cheveux au microscope de laboratoire et les interprète grâce à
+                    <span class="highlight">l'intelligence artificielle</span> pour révéler l'état de vos cuticules,
+                    de la fibre interne, de la porosité, de la fragilité et de la brillance.
+                    Vous recevez un rapport clair et un plan d'action personnalisé, sans jargon.
+                </p>
+
+                <div class="features-list" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span>Observation de vos cheveux au microscope haute définition</span>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span>Interprétation assistée par IA inspirée des méthodes médicales</span>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span>Rapport illustré + recommandations de soins et compléments adaptés</span>
+                    </div>
+                </div>
+
+                <div class="cta-buttons" data-aos="fade-up" data-aos-delay="400">
+                    <button class="btn-cta-primary">
+                        <span>Commencer mon diagnostic gratuit</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </button>
+
+                    <button class="btn-cta-secondary">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                        <span>Voir un exemple de rapport</span>
+                    </button>
+                </div>
+
+                <p class="disclaimer" data-aos="fade-up" data-aos-delay="500">
+                    Résultats à visée informative. Ne remplace pas un avis médical spécialisé.
+                </p>
+            </div>
+
+            <!-- Right Video Background -->
+            <div class="hero-visual" data-aos="fade-left" data-aos-delay="200">
+                <div class="video-container">
+                    <div class="video-overlay"></div>
+                    <video autoplay muted loop playsinline class="background-video">
+                        <source src="assets/videos/microscope-analysis.mp4" type="video/mp4">
+                        <!-- Fallback image -->
+                    </video>
+                    <div class="video-placeholder">
+                        <div class="microscope-animation">
+                            <div class="hair-strand"></div>
+                            <div class="scan-line"></div>
+                        </div>
+                    </div>
+
+                    <!-- Floating Stats Cards -->
+                    <div class="floating-card card-1">
+                        <div class="card-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                            </svg>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-label">Analyse en cours</div>
+                            <div class="card-value">98% complète</div>
+                        </div>
+                    </div>
+
+                    <div class="floating-card card-2">
+                        <div class="card-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                            </svg>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-label">Santé capillaire</div>
+                            <div class="card-value">Bonne</div>
+                        </div>
+                    </div>
+
+                    <div class="floating-card card-3">
+                        <div class="card-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-label">Temps d'analyse</div>
+                            <div class="card-value">2 min</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="scroll-indicator" data-aos="fade-up" data-aos-delay="600">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+            <span>Découvrir plus</span>
+        </div>
+    </section>
+
+    <!-- Particles Background -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+</body>
+</html>
